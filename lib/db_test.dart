@@ -20,6 +20,27 @@ void main() async {
     },
     version: 1,
   );
+
+  Future<void> insertDog(
+    Dog dog,
+  ) async {
+    final db = await database;
+    await db.insert(
+      'dogs',
+      dog.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  const bidu = Dog(
+    id: 1,
+    name: 'Bidu',
+    age: 7,
+  );
+
+  await insertDog(
+    bidu,
+  );
 }
 
 class Dog {
@@ -32,4 +53,17 @@ class Dog {
     required this.name,
     required this.age,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'age': age,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Dog{id: $id, name: $name, age: $age}';
+  }
 }
