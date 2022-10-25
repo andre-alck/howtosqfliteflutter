@@ -66,6 +66,19 @@ void main() async {
     );
   }
 
+  Future<void> deleteDog(
+    int id,
+  ) async {
+    final db = await database;
+    await db.delete(
+      'dogs',
+      where: 'id = ?',
+      whereArgs: [
+        id,
+      ],
+    );
+  }
+
   var bidu = const Dog(
     id: 1,
     name: 'Bidu',
@@ -75,7 +88,6 @@ void main() async {
   await insertDog(
     bidu,
   );
-
   print(
     await dogs(),
   );
@@ -89,7 +101,13 @@ void main() async {
   await updateDog(
     bidu,
   );
+  print(
+    bidu,
+  );
 
+  await deleteDog(
+    1,
+  );
   print(
     bidu,
   );
